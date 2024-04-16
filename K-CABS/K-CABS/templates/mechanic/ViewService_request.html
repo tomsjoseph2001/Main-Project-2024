@@ -1,0 +1,55 @@
+2{% extends "mechanic/index.html" %}
+{% block body %}
+<form action="/myapp/mechanic_view_request_post_approved/#hai" method="post">
+{% csrf_token %}
+<table class="pull-left">
+  <tr>
+    <td>From Date</td>
+    <td><input type="date" name="textfield" id="textfield" class="form-control" /></td>
+    <td>To Date</td>
+    <td><input type="date" name="textfield2" id="textfield" class="form-control" /></td>
+    <td><input type="submit" name="button" id="button" value="search" class="btn btn-success" /></td>
+  </tr>
+</table>
+    </form>
+<br>
+<table class="table table-bordered" border="1">
+  <tr>
+    <th>Sno</th>
+    <th>Driver Details</th>
+    <th>Requested Date</th>
+      <th></th>
+      <th></th>
+
+  </tr>
+    {% for i in data %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ i.DRIVER.name }}<BR>{{ i.DRIVER.email }}<br>{{ i.DRIVER.phone }}</td>
+      <td>{{ i.date }}</td>
+    <td width="50px">
+       <a href="/myapp/mechanic_view_request_more_approved/{{ i.id }}#hai" class="btn btn-warning">More..</a>
+  </td>
+      <td>
+     <form id="form1" name="form1" method="post" action="/myapp/total_calculate/">
+    {% csrf_token %}
+         <input type="hidden" name="oid" id="oid" value="{{ i.id }}" />
+  <table>
+    <tr>
+      <td>Amount</td>
+      <td><input type="text" name="textfield2" id="textfield2" placeholder="Labour charges" /></td>
+    </tr>
+    <tr>
+      <td colspan="2"><input type="submit" name="button" id="button" value="Total" /></td>
+{#      <td><a href="#">forgot password</a></td>#}
+    </tr>
+  </table>
+</form>
+  </td>
+  </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}
